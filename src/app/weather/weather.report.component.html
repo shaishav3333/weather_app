@@ -1,0 +1,110 @@
+<div class="container-fluid mar-20">
+    <div class="">
+        <header>
+            <div class="col-md-6 col-sm-8 col-xs-12">
+                <form #weatherReportForm="ngForm">
+                    <div class="form-group col-xs-9">
+
+                        <input class="form-control" type="text" id="search" #search1 name="search" placeholder="Enter Zip code/City" [(ngModel)]="search"
+                            required [formControl]="searchControl" />
+
+                        <button class="serach-btn" #btn  (click)="getWeatherDetailsone()">
+                            <img src="https://www.shareicon.net/data/256x256/2015/10/06/651979_target_512x512.png">
+                        </button>
+                    </div>
+
+                    <!-- <button class="btn btn-primary" [disabled]="weatherReportForm.invalid" type="button" (click)="getWeatherDetails()">Search</button>-->
+                </form>
+
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 weather-info">
+                <h4 *ngIf="city" class="location">{{city}}</h4>
+                <div class="location-report">
+                    <span *ngIf="weatherReports.length > 0">
+                        <img [src]="getImagePath(weatherReports[0])" />
+                        <span>{{weatherReports[0].weather[0].description}}</span>
+                    </span>
+                    <span class="temperature" *ngIf="weatherReports.length > 0">
+                        <strong>Temperature:</strong>
+                        <span [innerHTML]="getTemperature(weatherReports[0].temp.day)"></span>
+                    </span>
+                </div>
+
+            </div>
+        </header>
+
+        <div class="col-xs-12 weather-details">
+                <div class="form-group col-xs-12">
+                        <form #weatherReportForm2="ngForm">
+                        <div>
+                            <input class="form-control" type="text" id="search3" #search3 name="search" placeholder="Enter Zip code/City" [(ngModel)]="search"
+                            required [formControl]="searchControl">
+
+                            <button  class="serach-btn" (click)="getWeatherDetailsthree()">
+                                <img  src="https://www.shareicon.net/data/256x256/2015/10/06/651979_target_512x512.png">
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+            <ul class="weather-report flex">
+                <li class="box" *ngFor="let report of weatherReports; let i=index">
+                    <div>
+                        <p class=" weather-day weather-today" *ngIf="i === 0">Today</p>
+                        <p class="weather-day" *ngIf="i !== 0">{{report.dt*1000 | date:'EEEE'}}</p>
+                        <div class="cloudy">
+                            <img [src]="getImagePath(report)">
+                            <span>{{report.weather[0].description}}</span>
+                        </div>
+                        <p>
+                            <strong>Temperature:</strong>
+                            <span [innerHTML]="getTemperature(report.temp.day)"></span>
+                        </p>
+                        <p>
+                            <strong>High Temperature:</strong>
+                            <span [innerHTML]="getTemperature(report.temp.max)"></span>
+                        </p>
+                        <p>
+                            <strong>Low Temperature:</strong>
+                            <span [innerHTML]="getTemperature(report.temp.min)"></span>
+                        </p>
+                        <p>
+                            <strong>Wind:</strong>{{report?.speed}} m/s</p>
+                        <p>
+                            <strong>Humidity:</strong>{{report?.humidity}}</p>
+                        <p>
+                            <strong>UV Index:</strong>{{report?.uv?.value}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <footer >
+            <div class="footer-report">
+                <form #weatherReportForm1="ngForm">
+                    <div class="form-group col-xs-4">
+                            <input class="form-control" type="text" id="search2" #search2 name="search2" placeholder="Enter Zip code/City" [(ngModel)]="search"
+                            />
+                        <button class="serach-btn" [disabled]="weatherReportForm1.invalid" (click)="getWeatherDetailstwo()">
+                            <img src="https://www.shareicon.net/data/256x256/2015/10/06/651979_target_512x512.png">
+                        </button>
+
+                    </div>
+                </form>
+                <div class="footer-location"  *ngIf="weatherReports.length > 0">
+                    <h4 *ngIf="city" class="location">{{city}}</h4>
+                    <div class="location-report">
+                        <span *ngIf="weatherReports.length > 0">
+                            <img [src]="getImagePath(weatherReports[0])" />
+                            <span>{{weatherReports[0].weather[0].description}}</span>
+                        </span>
+                        <span *ngIf="weatherReports.length > 0">
+                            <strong>Temperature:</strong>
+                            <span [innerHTML]="getTemperature(weatherReports[0].temp.day)"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
